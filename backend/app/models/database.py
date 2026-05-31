@@ -23,7 +23,7 @@ class TransactionType(str, enum.Enum):
 
 
 class User(Base):
-    __tablename__ = "users"
+    __tablename__ = "app_users"
 
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String, unique=True, index=True, nullable=False)
@@ -45,11 +45,11 @@ class User(Base):
 
 
 class CreditTransaction(Base):
-    __tablename__ = "credit_transactions"
+    __tablename__ = "app_credit_transactions"
 
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    amount = Column(Float, nullable=False)  # 正数为充值，负数为消耗
+    user_id = Column(Integer, ForeignKey("app_users.id"), nullable=False)
+    amount = Column(Float, nullable=False)
     transaction_type = Column(Enum(TransactionType), nullable=False)
     description = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
@@ -58,10 +58,10 @@ class CreditTransaction(Base):
 
 
 class Subscription(Base):
-    __tablename__ = "subscriptions"
+    __tablename__ = "app_subscriptions"
 
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    user_id = Column(Integer, ForeignKey("app_users.id"), nullable=False)
     subscription_type = Column(Enum(SubscriptionType), nullable=False)
     membership_level = Column(Enum(MembershipLevel), nullable=False)
     start_date = Column(DateTime, default=datetime.utcnow)
@@ -74,11 +74,11 @@ class Subscription(Base):
 
 
 class GeneratedImage(Base):
-    __tablename__ = "generated_images"
+    __tablename__ = "app_generated_images"
 
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    image_type = Column(String, nullable=False)  # text_to_image, image_to_image, remove_bg, resize
+    user_id = Column(Integer, ForeignKey("app_users.id"), nullable=False)
+    image_type = Column(String, nullable=False)
     prompt = Column(String, nullable=True)
     file_path = Column(String, nullable=False)
     credits_used = Column(Float, nullable=False)
