@@ -6,9 +6,13 @@ from sqlalchemy.orm import Session
 from ..models.database import User
 from ..models.schemas import UserCreate
 from ..config import get_settings
+import hashlib
+import secrets
 
 settings = get_settings()
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+# Use sha256_crypt for compatibility
+pwd_context = CryptContext(schemes=["sha256_crypt"], deprecated="auto")
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:

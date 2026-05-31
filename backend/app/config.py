@@ -4,13 +4,13 @@ from functools import lru_cache
 
 class Settings(BaseSettings):
     # Kei.ai AI
-    kimi_api_key: str
+    kimi_api_key: str = ""
     kimi_api_base: str = "https://api.ke.ai/v1"
 
     # Supabase
     supabase_url: str = ""
     supabase_key: str = ""
-    database_url: str
+    database_url: str = "sqlite:///./image_processor.db"
 
     # JWT
     secret_key: str
