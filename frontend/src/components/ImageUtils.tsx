@@ -23,7 +23,7 @@ const ImageUtils: React.FC = () => {
 
   const handleResize = async () => {
     if (!file) {
-      message.warning('请先上传图片');
+      message.warning('Please upload an image first');
       return;
     }
 
@@ -33,14 +33,14 @@ const ImageUtils: React.FC = () => {
       setResultUrl(response.data.image_url);
       message.success(response.data.message);
     } catch (error: any) {
-      message.error(error.response?.data?.detail || '处理失败');
+      message.error(error.response?.data?.detail || 'Processing failed');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <Card title="图片工具" style={{ maxWidth: 800, margin: '0 auto' }}>
+    <Card title="Image Tools" style={{ maxWidth: 800, margin: '0 auto' }}>
       <Space direction="vertical" style={{ width: '100%' }} size="large">
         <Dragger
           accept="image/*"
@@ -51,26 +51,26 @@ const ImageUtils: React.FC = () => {
           <p className="ant-upload-drag-icon">
             <InboxOutlined />
           </p>
-          <p className="ant-upload-text">点击或拖拽图片到此区域上传</p>
+          <p className="ant-upload-text">Click or drag image to upload</p>
         </Dragger>
 
         {previewUrl && (
           <Image src={previewUrl} alt="Preview" style={{ width: '100%', maxHeight: 300, objectFit: 'contain' }} />
         )}
 
-        <Card title="调整尺寸" size="small">
+        <Card title="Resize" size="small">
           <Space direction="vertical" style={{ width: '100%' }}>
             <Space>
-              <span>宽度:</span>
+              <span>Width:</span>
               <InputNumber min={1} max={4096} value={width} onChange={(v) => setWidth(v || 1024)} />
-              <span>高度:</span>
+              <span>Height:</span>
               <InputNumber min={1} max={4096} value={height} onChange={(v) => setHeight(v || 1024)} />
             </Space>
             <Checkbox checked={maintainRatio} onChange={(e) => setMaintainRatio(e.target.checked)}>
-              保持宽高比
+              Maintain aspect ratio
             </Checkbox>
             <Button type="primary" loading={loading} onClick={handleResize} block>
-              调整尺寸
+              Resize
             </Button>
           </Space>
         </Card>
@@ -78,7 +78,7 @@ const ImageUtils: React.FC = () => {
         {resultUrl && (
           <div>
             <Image src={resultUrl} alt="Result" style={{ width: '100%' }} />
-            <Button type="link" href={resultUrl} download>下载图片</Button>
+            <Button type="link" href={resultUrl} download>Download</Button>
           </div>
         )}
       </Space>

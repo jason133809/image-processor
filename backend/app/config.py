@@ -3,9 +3,9 @@ from functools import lru_cache
 
 
 class Settings(BaseSettings):
-    # Kimi AI
+    # Kei.ai AI
     kimi_api_key: str
-    kimi_api_base: str = "https://api.moonshot.cn/v1"
+    kimi_api_base: str = "https://api.ke.ai/v1"
 
     # Supabase
     supabase_url: str = ""

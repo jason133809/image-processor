@@ -15,7 +15,7 @@ const TextToImage: React.FC = () => {
 
   const handleGenerate = async () => {
     if (!prompt.trim()) {
-      message.warning('请输入提示词');
+      message.warning('Please enter a prompt');
       return;
     }
 
@@ -26,18 +26,18 @@ const TextToImage: React.FC = () => {
       setCreditsUsed(response.data.credits_used);
       message.success(response.data.message);
     } catch (error: any) {
-      message.error(error.response?.data?.detail || '生成失败');
+      message.error(error.response?.data?.detail || 'Generation failed');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <Card title="文生图" style={{ maxWidth: 800, margin: '0 auto' }}>
+    <Card title="Text to Image" style={{ maxWidth: 800, margin: '0 auto' }}>
       <Space direction="vertical" style={{ width: '100%' }} size="large">
         <TextArea
           rows={4}
-          placeholder="描述你想要生成的图片，例如：一只可爱的橘猫在阳光下打盹"
+          placeholder="Describe the image you want to generate, e.g.: A cute orange cat taking a nap in the sunshine"
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
         />
@@ -50,20 +50,20 @@ const TextToImage: React.FC = () => {
           </Select>
 
           <Select value={quality} onChange={setQuality} style={{ width: 120 }}>
-            <Option value="standard">标准</Option>
-            <Option value="hd">高清</Option>
+            <Option value="standard">Standard</Option>
+            <Option value="hd">HD</Option>
           </Select>
         </Space>
 
         <Button type="primary" size="large" loading={loading} onClick={handleGenerate} block>
-          生成图片
+          Generate Image
         </Button>
 
         {imageUrl && (
           <div>
             <Image src={imageUrl} alt="Generated" style={{ width: '100%' }} />
-            <p style={{ marginTop: 10, color: '#666' }}>消耗积分: {creditsUsed}</p>
-            <Button type="link" href={imageUrl} download>下载图片</Button>
+            <p style={{ marginTop: 10, color: '#666' }}>Credits used: {creditsUsed}</p>
+            <Button type="link" href={imageUrl} download>Download Image</Button>
           </div>
         )}
       </Space>

@@ -54,7 +54,7 @@ const App: React.FC = () => {
     localStorage.removeItem('token');
     setUser(null);
     setAuthModalVisible(true);
-    message.success('已退出登录');
+    message.success('Logged out successfully');
   };
 
   const refreshCredits = async () => {
@@ -68,7 +68,7 @@ const App: React.FC = () => {
 
   const getMembershipTag = (level: string) => {
     const config = {
-      free: { color: 'default', text: '免费用户' },
+      free: { color: 'default', text: 'Free' },
       vip: { color: 'gold', text: 'VIP' },
       svip: { color: 'red', text: 'SVIP' },
     };
@@ -83,32 +83,32 @@ const App: React.FC = () => {
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item key="credits" icon={<WalletOutlined />}>
-        积分: {credits.toFixed(1)}
+        Credits: {credits.toFixed(1)}
       </Menu.Item>
       <Menu.Item key="membership">
         {getMembershipTag(user.membership_level)}
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item key="logout" icon={<LogoutOutlined />} onClick={handleLogout}>
-        退出登录
+        Logout
       </Menu.Item>
     </Menu>
   ) : null;
 
   if (loading) {
-    return <div style={{ textAlign: 'center', padding: 100 }}>加载中...</div>;
+    return <div style={{ textAlign: 'center', padding: 100 }}>Loading...</div>;
   }
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#001529' }}>
         <div style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>
-          🎨 图片处理平台
+          AI Image Processor
         </div>
         {user && (
           <Space>
             <Tag color="blue" icon={<WalletOutlined />}>
-              积分: {credits.toFixed(1)}
+              Credits: {credits.toFixed(1)}
             </Tag>
             {getMembershipTag(user.membership_level)}
             <Dropdown overlay={userMenu} placement="bottomRight">
@@ -131,7 +131,7 @@ const App: React.FC = () => {
                 label: (
                   <span>
                     <PictureOutlined />
-                    文生图
+                    Text to Image
                   </span>
                 ),
                 children: <TextToImage />,
@@ -141,7 +141,7 @@ const App: React.FC = () => {
                 label: (
                   <span>
                     <PictureOutlined />
-                    图生图
+                    Image to Image
                   </span>
                 ),
                 children: <ImageToImage />,
@@ -151,7 +151,7 @@ const App: React.FC = () => {
                 label: (
                   <span>
                     <ScissorOutlined />
-                    智能抠图
+                    Remove Background
                   </span>
                 ),
                 children: <RemoveBackground />,
@@ -161,7 +161,7 @@ const App: React.FC = () => {
                 label: (
                   <span>
                     <ToolOutlined />
-                    图片工具
+                    Image Tools
                   </span>
                 ),
                 children: <ImageUtils />,
@@ -171,10 +171,10 @@ const App: React.FC = () => {
           />
         ) : (
           <Card style={{ maxWidth: 600, margin: '100px auto', textAlign: 'center' }}>
-            <h2>欢迎使用图片处理平台</h2>
-            <p>请先登录或注册以使用服务</p>
+            <h2>Welcome to AI Image Processor</h2>
+            <p>Please login or register to use our services</p>
             <Button type="primary" size="large" onClick={() => setAuthModalVisible(true)}>
-              登录 / 注册
+              Login / Register
             </Button>
           </Card>
         )}

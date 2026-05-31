@@ -20,7 +20,7 @@ const RemoveBackground: React.FC = () => {
 
   const handleRemoveBg = async () => {
     if (!file) {
-      message.warning('请先上传图片');
+      message.warning('Please upload an image first');
       return;
     }
 
@@ -30,14 +30,14 @@ const RemoveBackground: React.FC = () => {
       setResultUrl(response.data.image_url);
       message.success(response.data.message);
     } catch (error: any) {
-      message.error(error.response?.data?.detail || '处理失败');
+      message.error(error.response?.data?.detail || 'Processing failed');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <Card title="智能抠图" style={{ maxWidth: 1000, margin: '0 auto' }}>
+    <Card title="Remove Background" style={{ maxWidth: 1000, margin: '0 auto' }}>
       <Space direction="vertical" style={{ width: '100%' }} size="large">
         <Dragger
           accept="image/*"
@@ -48,30 +48,30 @@ const RemoveBackground: React.FC = () => {
           <p className="ant-upload-drag-icon">
             <InboxOutlined />
           </p>
-          <p className="ant-upload-text">点击或拖拽图片到此区域上传</p>
-          <p className="ant-upload-hint">自动识别并移除背景，生成透明PNG</p>
+          <p className="ant-upload-text">Click or drag image to upload</p>
+          <p className="ant-upload-hint">Automatically detect and remove background, generate transparent PNG</p>
         </Dragger>
 
         <Button type="primary" size="large" loading={loading} onClick={handleRemoveBg} block disabled={!file}>
-          一键抠图
+          Remove Background
         </Button>
 
         {(originalUrl || resultUrl) && (
           <Row gutter={16}>
             {originalUrl && (
               <Col span={12}>
-                <Card title="原图" size="small">
+                <Card title="Original" size="small">
                   <Image src={originalUrl} alt="Original" style={{ width: '100%' }} />
                 </Card>
               </Col>
             )}
             {resultUrl && (
               <Col span={12}>
-                <Card title="抠图结果" size="small">
+                <Card title="Result" size="small">
                   <div style={{ background: 'repeating-conic-gradient(#ddd 0% 25%, white 0% 50%) 50% / 20px 20px' }}>
                     <Image src={resultUrl} alt="Result" style={{ width: '100%' }} />
                   </div>
-                  <Button type="link" href={resultUrl} download style={{ marginTop: 10 }}>下载透明PNG</Button>
+                  <Button type="link" href={resultUrl} download style={{ marginTop: 10 }}>Download PNG</Button>
                 </Card>
               </Col>
             )}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Modal, Form, Input, Button, message, Tabs } from 'antd';
 import { authAPI } from '../services/api';
 
@@ -22,11 +22,11 @@ const AuthModal: React.FC<AuthModalProps> = ({ visible, onClose, onSuccess }) =>
         password: values.password,
       });
       localStorage.setItem('token', response.data.access_token);
-      message.success('登录成功');
+      message.success('Login successful');
       onSuccess();
       onClose();
     } catch (error: any) {
-      message.error(error.response?.data?.detail || '登录失败');
+      message.error(error.response?.data?.detail || 'Login failed');
     } finally {
       setLoading(false);
     }
@@ -39,8 +39,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ visible, onClose, onSuccess }) =>
         email: values.email,
         password: values.password,
       });
-      message.success('注册成功，已赠送100积分！');
-      // 自动登录
+      message.success('Registration successful! 100 credits bonus!');
       const loginResponse = await authAPI.login({
         username: values.email,
         password: values.password,
@@ -49,7 +48,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ visible, onClose, onSuccess }) =>
       onSuccess();
       onClose();
     } catch (error: any) {
-      message.error(error.response?.data?.detail || '注册失败');
+      message.error(error.response?.data?.detail || 'Registration failed');
     } finally {
       setLoading(false);
     }
@@ -57,83 +56,83 @@ const AuthModal: React.FC<AuthModalProps> = ({ visible, onClose, onSuccess }) =>
 
   return (
     <Modal
-      title="欢迎使用图片处理平台"
+      title="Welcome to AI Image Processor"
       open={visible}
       onCancel={onClose}
       footer={null}
       width={400}
     >
       <Tabs activeKey={activeTab} onChange={setActiveTab}>
-        <Tabs.TabPane tab="登录" key="login">
+        <Tabs.TabPane tab="Login" key="login">
           <Form form={loginForm} onFinish={handleLogin} layout="vertical">
             <Form.Item
-              label="邮箱"
+              label="Email"
               name="email"
               rules={[
-                { required: true, message: '请输入邮箱' },
-                { type: 'email', message: '请输入有效的邮箱' },
+                { required: true, message: 'Please enter email' },
+                { type: 'email', message: 'Please enter a valid email' },
               ]}
             >
               <Input placeholder="your@email.com" />
             </Form.Item>
             <Form.Item
-              label="密码"
+              label="Password"
               name="password"
-              rules={[{ required: true, message: '请输入密码' }]}
+              rules={[{ required: true, message: 'Please enter password' }]}
             >
-              <Input.Password placeholder="密码" />
+              <Input.Password placeholder="Password" />
             </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit" loading={loading} block>
-                登录
+                Login
               </Button>
             </Form.Item>
           </Form>
         </Tabs.TabPane>
 
-        <Tabs.TabPane tab="注册" key="register">
+        <Tabs.TabPane tab="Register" key="register">
           <Form form={registerForm} onFinish={handleRegister} layout="vertical">
             <Form.Item
-              label="邮箱"
+              label="Email"
               name="email"
               rules={[
-                { required: true, message: '请输入邮箱' },
-                { type: 'email', message: '请输入有效的邮箱' },
+                { required: true, message: 'Please enter email' },
+                { type: 'email', message: 'Please enter a valid email' },
               ]}
             >
               <Input placeholder="your@email.com" />
             </Form.Item>
             <Form.Item
-              label="密码"
+              label="Password"
               name="password"
               rules={[
-                { required: true, message: '请输入密码' },
-                { min: 6, message: '密码至少6位' },
+                { required: true, message: 'Please enter password' },
+                { min: 6, message: 'Password must be at least 6 characters' },
               ]}
             >
-              <Input.Password placeholder="至少6位密码" />
+              <Input.Password placeholder="At least 6 characters" />
             </Form.Item>
             <Form.Item
-              label="确认密码"
+              label="Confirm Password"
               name="confirmPassword"
               dependencies={['password']}
               rules={[
-                { required: true, message: '请确认密码' },
+                { required: true, message: 'Please confirm password' },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
                     if (!value || getFieldValue('password') === value) {
                       return Promise.resolve();
                     }
-                    return Promise.reject(new Error('两次密码不一致'));
+                    return Promise.reject(new Error('Passwords do not match'));
                   },
                 }),
               ]}
             >
-              <Input.Password placeholder="再次输入密码" />
+              <Input.Password placeholder="Confirm your password" />
             </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit" loading={loading} block>
-                注册（赠送100积分）
+                Register (100 credits bonus!)
               </Button>
             </Form.Item>
           </Form>

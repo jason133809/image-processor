@@ -8,15 +8,15 @@ from .routers import auth, credits, membership, text_to_image, image_to_image, r
 settings = get_settings()
 
 app = FastAPI(
-    title="图片处理平台",
-    description="AI驱动的图片生成和处理服务",
+    title="AI Image Processor API",
+    description="AI-powered image generation and processing service",
     version="1.0.0"
 )
 
-# CORS配置
+# CORS configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:3000"],  # 前端地址
+    allow_origins=["*"],  # Allow all origins for deployment
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

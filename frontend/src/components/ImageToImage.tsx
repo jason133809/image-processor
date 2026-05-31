@@ -20,7 +20,7 @@ const ImageToImage: React.FC = () => {
 
   const handleGenerate = async () => {
     if (!file) {
-      message.warning('请先上传图片');
+      message.warning('Please upload an image first');
       return;
     }
 
@@ -30,14 +30,14 @@ const ImageToImage: React.FC = () => {
       setImageUrl(response.data.image_url);
       message.success(response.data.message);
     } catch (error: any) {
-      message.error(error.response?.data?.detail || '生成失败');
+      message.error(error.response?.data?.detail || 'Generation failed');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <Card title="图生图" style={{ maxWidth: 800, margin: '0 auto' }}>
+    <Card title="Image to Image" style={{ maxWidth: 800, margin: '0 auto' }}>
       <Space direction="vertical" style={{ width: '100%' }} size="large">
         <Dragger
           accept="image/*"
@@ -48,8 +48,8 @@ const ImageToImage: React.FC = () => {
           <p className="ant-upload-drag-icon">
             <InboxOutlined />
           </p>
-          <p className="ant-upload-text">点击或拖拽图片到此区域上传</p>
-          <p className="ant-upload-hint">支持 PNG, JPEG, WEBP 等格式</p>
+          <p className="ant-upload-text">Click or drag image to upload</p>
+          <p className="ant-upload-hint">Supports PNG, JPEG, WEBP formats</p>
         </Dragger>
 
         {previewUrl && (
@@ -57,19 +57,19 @@ const ImageToImage: React.FC = () => {
         )}
 
         <Input
-          placeholder="可选：描述你想要的变化效果"
+          placeholder="Optional: Describe the changes you want"
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
         />
 
         <Button type="primary" size="large" loading={loading} onClick={handleGenerate} block>
-          生成变体
+          Generate Variant
         </Button>
 
         {imageUrl && (
           <div>
             <Image src={imageUrl} alt="Generated" style={{ width: '100%' }} />
-            <Button type="link" href={imageUrl} download>下载图片</Button>
+            <Button type="link" href={imageUrl} download>Download</Button>
           </div>
         )}
       </Space>
